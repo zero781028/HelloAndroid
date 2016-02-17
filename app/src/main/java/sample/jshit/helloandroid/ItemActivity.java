@@ -2,7 +2,9 @@ package sample.jshit.helloandroid;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
@@ -59,7 +61,7 @@ public class ItemActivity extends AppCompatActivity {
         }
     }
 
-    private Colors getColors(int color){
+    public static Colors getColors(int color){
         Colors result=Colors.LIGHTGREY;
         if (color == Colors.BLUE.parseColor()) {
             result = Colors.BLUE;
@@ -96,6 +98,10 @@ public class ItemActivity extends AppCompatActivity {
             }
             else{
                 item.setDatetime(new Date().getTime());
+
+                SharedPreferences sharedPreferences= PreferenceManager.getDefaultSharedPreferences(this);
+                int color=sharedPreferences.getInt("DEFAULT_COLOR",-1);
+                item.setColor(getColors(color));
             }
 
             Intent result=getIntent();

@@ -128,9 +128,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
         add_item.setVisible(selectedCount==0);
-        search_item.setVisible(selectedCount==0);
-        revert_item.setVisible(selectedCount>0);
-        delete_item.setVisible(selectedCount>0);
+        search_item.setVisible(selectedCount == 0);
+        revert_item.setVisible(selectedCount > 0);
+        delete_item.setVisible(selectedCount > 0);
     }
 
     @Override
@@ -215,5 +215,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
+    public void clickPreferences(MenuItem item){
+        startActivity(new Intent(this,PrefActivity.class));
+    }
 }

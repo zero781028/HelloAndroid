@@ -26,7 +26,15 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".ColorActivity" android:theme="@android:style/Theme.Dialog"></activity>
+        <activity
+            android:name=".ColorActivity"
+            android:theme="@android:style/Theme.Dialog">
+            <intent-filter>
+                <action android:name="sample.jshit.helloandroid.CHOOSE_COLOR"></action>
+                <category android:name="android.intent.category.DEFAULT"></category>
+            </intent-filter>
+        </activity>
+        <activity android:name=".PrefActivity"></activity>
     </application>
 
 </manifest>
