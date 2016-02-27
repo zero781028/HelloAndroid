@@ -14,8 +14,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -27,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
 
     private MenuItem add_item,search_item,revert_item,delete_item;
     private int selectedCount=0;
+    private ItemDAO itemDAO;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,12 +35,11 @@ public class MainActivity extends AppCompatActivity {
         proccessView();
         proccessController();
 
-        items=new ArrayList<Item>();
-
-        items.add(new Item(1,new Date().getTime(),Colors.RED,"關於Android Tutorial的事情.","Hello Content","","",0,0,0));
-        items.add(new Item(2,new Date().getTime(),Colors.BLUE,"一隻非常可愛的小狗狗!","她的名字叫「大熱狗」，又叫\n作「奶嘴」，是一隻非常可愛\n的小狗。","","",0,0,0));
-        items.add(new Item(3,new Date().getTime(),Colors.GREEN,"一首非常好聽的音樂！","Hello Content","","",0,0,0));
-
+        itemDAO=new ItemDAO(getApplicationContext());
+        if(itemDAO.getCount()==0){
+            itemDAO.sample();
+        }
+        items=itemDAO.getAll();
         itemAdapter=new ItemAdapter(this,R.layout.singleitem,items);
         item_list.setAdapter(itemAdapter);
     }
@@ -51,8 +50,8 @@ public class MainActivity extends AppCompatActivity {
             Item item=(Item)data.getExtras().getSerializable("sample.jshit.helloandroid.Item");
 
             if(requestCode==0){
-                item.setId(items.size()+1);
-                item.setDatetime(new Date().getTime());
+                //新增記事資料到資料庫
+                item=itemDAO.insert(item);
 
                 items.add(item);
                 itemAdapter.notifyDataSetChanged();
@@ -61,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
                 //讀取記事編號
                 int position=data.getIntExtra("position",-1);
                 if(position!=-1){
+                    itemDAO.update(item);
                     //設定修改的記事物件
                     items.set(position,item);
                     itemAdapter.notifyDataSetChanged();
@@ -184,6 +184,7 @@ public class MainActivity extends AppCompatActivity {
 
                                     if (item.isSelected()) {
                                         itemAdapter.remove(item);
+                                        itemDAO.delete(item);
                                     }
 
                                     index--;

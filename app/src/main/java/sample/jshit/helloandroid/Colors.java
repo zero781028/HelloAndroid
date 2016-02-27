@@ -6,8 +6,8 @@ import android.graphics.Color;
  * Created by zero7 on 2016/2/12.
  */
 public enum Colors {
-    LIGHTGREY("#D3D3D3"),BLUE("#33B5E5"),PURPLE("#AA66C"),GREEN("#99CC00"),
-    ORANGE("#FFBB33"),RED("#FF4444");
+    LIGHTGREY("#D3D3D3"),BLUE("#33B5E5"),PURPLE("#800080"),GREEN("#99CC00"),
+    ORANGE("#FFBB33"),RED("#FF4444"),BLACK("#000000");
 
     private String code;
 
